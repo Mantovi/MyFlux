@@ -1,8 +1,10 @@
 package com.mantovi.MyFlux.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.UUID;
 
@@ -19,8 +21,13 @@ public class User {
 
     private String username;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
+    @NotBlank
+    @Email
     private String email;
 
+    @NotBlank
+    @Size(min = 8)
+    @Column(nullable = false)
     private String password;
 }

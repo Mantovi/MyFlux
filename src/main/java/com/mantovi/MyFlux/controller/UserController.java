@@ -3,13 +3,9 @@ package com.mantovi.MyFlux.controller;
 import com.mantovi.MyFlux.dto.CreateUserRequestDTO;
 import com.mantovi.MyFlux.dto.UserResponseDTO;
 import com.mantovi.MyFlux.mapper.UserMapper;
-import com.mantovi.MyFlux.model.User;
-import com.mantovi.MyFlux.repository.UserRepository;
 import com.mantovi.MyFlux.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
