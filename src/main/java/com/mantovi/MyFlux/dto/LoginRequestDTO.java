@@ -6,10 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public record LoginRequestDTO(
-
-        @NotBlank
-        String username,
-
         @NotBlank
         @Email(message = "Email inválido")
         String email,
