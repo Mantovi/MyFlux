@@ -19,6 +19,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @NotBlank
+    @Column(nullable = false)
     private String username;
 
     @Column(unique = true, nullable = false)
