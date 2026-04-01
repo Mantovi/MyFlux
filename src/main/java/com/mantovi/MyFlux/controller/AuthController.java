@@ -7,6 +7,7 @@ import com.mantovi.MyFlux.dto.UserResponseDTO;
 import com.mantovi.MyFlux.infra.security.TokenService;
 import com.mantovi.MyFlux.model.User;
 import com.mantovi.MyFlux.repository.UserRepository;
+import com.mantovi.MyFlux.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,32 +27,17 @@ public class AuthController {
     private final UserRepository userRepository;
     private final PasswordEncoder  passwordEncoder;
     private final TokenService tokenService;
+    private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity login (@RequestBody LoginRequestDTO loginBody) {
-        User user = this.userRepository.findByEmail(loginBody.email()).orElseThrow(() -> new RuntimeException("User Not Found"));
-        if (passwordEncoder.matches(loginBody.password(), user.getPassword())) {
-            String token = this.tokenService.generateToken(user);
-            return ResponseEntity.ok(new ResponseDTO(user.getUsername(), token));
-        }
-        return ResponseEntity.badRequest().build();
+    public ResponseEntity login(@RequestBody @Valid LoginRequestDTO loginBody) {
+        ResponseDTO response = authService.login(loginBody);
+        return ResponseEntity.ok(response);
     }
 
-
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO registerBody){
-        Optional<User> user = this.userRepository.findByEmail(registerBody.email());
-        if(user.isEmpty()) {
-             User newUser = new User();
-             newUser.setPassword(passwordEncoder.encode(registerBody.password()));
-             newUser.setEmail(registerBody.email());
-             newUser.setUsername(registerBody.username());
-             this.userRepository.save(newUser);
-
-             String token = this.tokenService.generateToken(newUser);
-             return ResponseEntity.ok(new ResponseDTO(newUser.getUsername(), token));
-        }
-        return ResponseEntity.badRequest().build();
-
+    public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO registerBody) {
+        ResponseDTO response = authService.register(registerBody);
+        return ResponseEntity.ok(response);
     }
 }
