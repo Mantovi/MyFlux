@@ -28,4 +28,15 @@ public class CategoryServiceImpl implements CategoryService {
         Category savedCategory = categoryRepository.save(category);
         return CategoryMapper.toResponseCategory(savedCategory);
     }
+
+    @Override
+    public CategoryResponseDTO createCategoryGlobal(CategoryRequestDTO request) {
+        if (categoryRepository.existsByNameAndIsDefaultTrue(request.name())) {
+            throw new RuntimeException("Category already exists");
+        }
+
+        Category category = CategoryMapper.toCategoryGlobal(request);
+        Category savedCategory = categoryRepository.save(category);
+        return CategoryMapper.toResponseCategory(savedCategory);
+    }
 }

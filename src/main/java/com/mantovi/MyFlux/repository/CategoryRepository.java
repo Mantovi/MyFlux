@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface CategoryRepository extends JpaRepository<Category, UUID> {
     boolean existsByNameAndUser(String name, User user);
+    boolean existsByNameAndIsDefaultTrue(String name);
 }

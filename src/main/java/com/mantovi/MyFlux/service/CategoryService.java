@@ -7,4 +7,6 @@ import com.mantovi.MyFlux.model.User;
 
 public interface CategoryService {
     CategoryResponseDTO createCategory(CategoryRequestDTO request, User user);
+
+    CategoryResponseDTO createCategoryGlobal(CategoryRequestDTO request);
 }

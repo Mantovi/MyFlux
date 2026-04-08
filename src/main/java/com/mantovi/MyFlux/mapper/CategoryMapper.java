@@ -18,6 +18,14 @@ public class CategoryMapper {
                 .build();
     }
 
+    public static Category toCategoryGlobal(CategoryRequestDTO request) {
+        return Category.builder()
+                .name(request.name())
+                .type(request.type())
+                .isDefault(true)
+                .build();
+    }
+
     public static CategoryResponseDTO toResponseCategory(Category category) {
         return new CategoryResponseDTO(
                 category.getId(),
