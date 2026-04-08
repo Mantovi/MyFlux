@@ -4,6 +4,7 @@ import com.mantovi.MyFlux.dto.LoginRequestDTO;
 import com.mantovi.MyFlux.dto.RegisterRequestDTO;
 import com.mantovi.MyFlux.dto.ResponseDTO;
 import com.mantovi.MyFlux.infra.security.TokenService;
+import com.mantovi.MyFlux.model.Role;
 import com.mantovi.MyFlux.model.User;
 import com.mantovi.MyFlux.repository.UserRepository;
 import com.mantovi.MyFlux.service.AuthService;
@@ -38,12 +39,14 @@ public class AuthServiceImpl implements AuthService {
     public ResponseDTO register(RegisterRequestDTO registerBody) {
         Optional<User> user = userRepository.findByEmail(registerBody.email());
         if(user.isPresent()) {
-            throw new UsernameNotFoundException("User Already Exists");
+            throw new IllegalStateException("User Already Exists");
         }
         User userEntity = new User();
         userEntity.setUsername(registerBody.username());
         userEntity.setEmail(registerBody.email());
         userEntity.setPassword(passwordEncoder.encode(registerBody.password()));
+
+        userEntity.getRoles().add(Role.ROLE_USER);
 
         userRepository.save(userEntity);
         String token = tokenService.generateToken(userEntity);
