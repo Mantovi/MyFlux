@@ -12,6 +12,5 @@ public record LoginRequestDTO(
 
         @NotBlank
         @Size(min = 8, message = "sua senha deve possuir pelo menos de 8 caracteres")
-        String password) {
-
-}
+        String password
+) {}
