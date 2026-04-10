@@ -38,6 +38,6 @@ public class Category {
     private User user;
 
     @Column(nullable = false)
-    private boolean isDefault;
+    private boolean isGlobal;
 
 }

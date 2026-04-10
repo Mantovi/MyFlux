@@ -8,5 +8,5 @@ public record CategoryResponseDTO (
         UUID id,
         String name,
         TransactionType type,
-        boolean isDefault
+        boolean isGlobal
 ) {}

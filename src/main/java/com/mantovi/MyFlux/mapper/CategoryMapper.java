@@ -9,29 +9,29 @@ import org.springframework.stereotype.Component;
 @Component
 public class CategoryMapper {
 
-    public static Category toCategory(CategoryRequestDTO request, User user) {
+    public Category toCategory(CategoryRequestDTO request, User user) {
         return Category.builder()
                 .name(request.name())
                 .type(request.type())
                 .user(user)
-                .isDefault(false)
+                .isGlobal(false)
                 .build();
     }
 
-    public static Category toCategoryGlobal(CategoryRequestDTO request) {
+    public Category toCategoryGlobal(CategoryRequestDTO request) {
         return Category.builder()
                 .name(request.name())
                 .type(request.type())
-                .isDefault(true)
+                .isGlobal(true)
                 .build();
     }
 
-    public static CategoryResponseDTO toResponseCategory(Category category) {
+    public CategoryResponseDTO toResponseCategory(Category category) {
         return new CategoryResponseDTO(
                 category.getId(),
                 category.getName(),
                 category.getType(),
-                category.isDefault()
+                category.isGlobal()
         );
     }
 }

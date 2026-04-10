@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/category")
+@RequestMapping("/categories")
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PostMapping("/create")
+    @PostMapping()
     public ResponseEntity<CategoryResponseDTO> create(@RequestBody @Valid CategoryRequestDTO request, @AuthenticationPrincipal User user) {
         return ResponseEntity.ok(categoryService.createCategory(request, user));
     }
 
-    @PostMapping("/create/global")
+    @PostMapping("/global")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CategoryResponseDTO> createGlobal(@RequestBody @Valid CategoryRequestDTO request) {
         return ResponseEntity.ok(categoryService.createCategoryGlobal(request));
