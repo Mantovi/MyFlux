@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<CategoryResponseDTO> create(@RequestBody @Valid CategoryRequestDTO request, @AuthenticationPrincipal User user) {
         return ResponseEntity.ok(categoryService.createCategory(request, user));
     }

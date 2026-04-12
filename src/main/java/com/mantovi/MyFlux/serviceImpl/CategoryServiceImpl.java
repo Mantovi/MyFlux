@@ -20,7 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponseDTO createCategory(CategoryRequestDTO request, User user) {
         if (categoryRepository.existsByNameAndUser(request.name(), user)) {
-            throw new RuntimeException("Category already exists");
+            throw new IllegalArgumentException("Category already exists");
         }
 
         Category category = categoryMapper.toCategory(request, user);
@@ -31,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponseDTO createCategoryGlobal(CategoryRequestDTO request) {
         if (categoryRepository.existsByNameAndIsGlobalTrue(request.name())) {
-            throw new RuntimeException("Category already exists");
+            throw new IllegalArgumentException("Category already exists");
         }
 
         Category category = categoryMapper.toCategoryGlobal(request);
