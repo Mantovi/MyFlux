@@ -3,7 +3,6 @@ package com.mantovi.MyFlux.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -33,18 +32,17 @@ public class Account {
     private AccountType accountType;
 
     @NotNull
-    @PositiveOrZero
     @Column(nullable = false)
     private BigDecimal openingBalance;
 
     private LocalDate openingDate;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     @PrePersist
     public void prePersist() {
