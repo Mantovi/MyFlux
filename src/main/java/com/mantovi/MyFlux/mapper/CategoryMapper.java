@@ -34,4 +34,13 @@ public class CategoryMapper {
                 category.isGlobal()
         );
     }
+
+    public CategoryResponseDTO toResponseCategoryToUser(Category category) {
+        return new CategoryResponseDTO(
+                category.getId(),
+                category.getName(),
+                category.getType(),
+                category.isGlobal()
+        );
+    }
 }

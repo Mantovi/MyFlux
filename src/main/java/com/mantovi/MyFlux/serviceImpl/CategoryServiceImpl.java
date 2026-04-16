@@ -10,6 +10,9 @@ import com.mantovi.MyFlux.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
@@ -37,5 +40,13 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryMapper.toCategoryGlobal(request);
         Category savedCategory = categoryRepository.save(category);
         return categoryMapper.toResponseCategory(savedCategory);
+    }
+
+    @Override
+    public List<CategoryResponseDTO> listCategoriesByUser(UUID userId) {
+        List<Category> categories = categoryRepository.findByIsGlobalTrueOrUserId(userId);
+        return categories.stream()
+                .map(categoryMapper::toResponseCategoryToUser)
+                .toList();
     }
 }

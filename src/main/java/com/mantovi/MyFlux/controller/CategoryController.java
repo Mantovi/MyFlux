@@ -11,6 +11,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/categories")
@@ -26,5 +28,14 @@ public class CategoryController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CategoryResponseDTO> createGlobal(@RequestBody @Valid CategoryRequestDTO request) {
         return ResponseEntity.ok(categoryService.createCategoryGlobal(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CategoryResponseDTO>> getCategories(
+            @AuthenticationPrincipal User user) {
+
+        return ResponseEntity.ok(
+                categoryService.listCategoriesByUser(user.getId())
+        );
     }
 }
