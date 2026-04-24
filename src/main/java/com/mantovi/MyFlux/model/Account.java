@@ -33,9 +33,15 @@ public class Account {
 
     @NotNull
     @Column(nullable = false)
-    private BigDecimal openingBalance;
+    private BigDecimal initialBalance;
+
+    @NotNull
+    @Column(nullable = false)
+    private BigDecimal currentBalance;
 
     private LocalDate openingDate;
+
+    private Boolean active;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

@@ -15,7 +15,7 @@ public class AccountMapper {
         return Account.builder()
                 .name(request.name())
                 .accountType(request.accountType())
-                .openingBalance(request.openingBalance())
+                .initialBalance(request.initialBalance())
                 .openingDate(request.openingDate())
                 .user(user)
                 .build();
@@ -25,7 +25,8 @@ public class AccountMapper {
         return new AccountResponseDTO(
                 account.getName(),
                 account.getAccountType(),
-                account.getOpeningBalance(),
+                account.getInitialBalance(),
+                account.getCurrentBalance(),
                 account.getOpeningDate(),
                 userMapper.toResponseUser(account.getUser())
         );

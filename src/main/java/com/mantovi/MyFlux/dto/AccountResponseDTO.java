@@ -8,7 +8,8 @@ import java.time.LocalDate;
 public record AccountResponseDTO(
         String name,
         AccountType accountType,
-        BigDecimal openingBalance,
+        BigDecimal initialBalance,
+        BigDecimal currentBalance,
         LocalDate openingDate,
         UserResponseDTO user
 ) {}

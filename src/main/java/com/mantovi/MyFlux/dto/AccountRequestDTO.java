@@ -16,7 +16,7 @@ public record AccountRequestDTO(
         AccountType accountType,
 
         @NotNull
-        BigDecimal openingBalance,
+        BigDecimal initialBalance,
 
         LocalDate openingDate
 
