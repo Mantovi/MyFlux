@@ -22,7 +22,6 @@ public class AccountServiceImpl implements AccountService {
         Account account = accountMapper.toAccount(request, user);
         Account savedAccount = accountRepository.save(account);
 
-        return accountMapper.toAccountResponseDTO(savedAccount);
-
+        return accountMapper.toAccountResponse(savedAccount);
     }
 }

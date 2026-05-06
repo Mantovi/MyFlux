@@ -21,7 +21,7 @@ public class AccountMapper {
                 .build();
     }
 
-    public AccountResponseDTO  toAccountResponseDTO(Account account) {
+    public AccountResponseDTO  toAccountResponse(Account account) {
         return new AccountResponseDTO(
                 account.getName(),
                 account.getAccountType(),
