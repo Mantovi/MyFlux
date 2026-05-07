@@ -11,6 +11,7 @@ import com.mantovi.MyFlux.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Service
@@ -41,13 +42,20 @@ public class TransactionServiceImpl implements TransactionService {
             throw new RuntimeException("User not authorized to use this account");
         }
 
-        if (!category.isGlobal() && !category.getUser().getId().equals(user.getId())) {
+        if (!category.isGlobal() &&
+                (category.getUser() == null ||
+                        !category.getUser().getId().equals(user.getId()))
+        ) {
             throw new RuntimeException("User not authorized to use this category");
         }
 
         transaction.setAccount(account);
         transaction.setCategory(category);
+
         transaction.setStatus(resolveStatus(request.date()));
+        applyBalanceEffect(transaction);
+
+        accountRepository.save(account);
 
         Transaction savedTransaction = transactionRepository.save(transaction);
 
@@ -60,5 +68,25 @@ public class TransactionServiceImpl implements TransactionService {
             return TransactionStatus.PENDING;
         }
         return  TransactionStatus.CONFIRMED;
+    }
+
+    private void applyBalanceEffect(Transaction transaction) {
+        if (transaction.getStatus() != TransactionStatus.CONFIRMED) {
+            return;
+        }
+
+        Account account = transaction.getAccount();
+
+        BigDecimal currentBalance = account.getCurrentBalance();
+
+        if (transaction.getTransactionType() == TransactionType.INCOME) {
+            account.setCurrentBalance(
+                    currentBalance.add(transaction.getAmount())
+            );
+        } else {
+            account.setCurrentBalance(
+                    currentBalance.subtract(transaction.getAmount())
+            );
+        }
     }
 }
