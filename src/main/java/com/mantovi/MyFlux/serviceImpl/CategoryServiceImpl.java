@@ -22,7 +22,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponseDTO createCategory(CategoryRequestDTO request, User user) {
-        if (categoryRepository.existsByNameAndUser(request.name(), user)) {
+        boolean categoryAlreadyExists =
+                categoryRepository.existsByUser_IdAndNameAndType(user.getId(), request.name(), request.type());
+
+        if (categoryAlreadyExists) {
             throw new IllegalArgumentException("Category already exists");
         }
 

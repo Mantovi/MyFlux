@@ -10,8 +10,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "categories",
-        uniqueConstraints = @UniqueConstraint(columnNames =  {"name", "user_id"})
-        //nomes das categorias devem ser únicas para cada usuário
+        uniqueConstraints = @UniqueConstraint(
+                name = "category_name_user_type",
+                columnNames =  {"name", "user_id", "type"})
+        //nomes das categorias devem ser únicas para cada tipo e usuário
 )
 @Getter
 @Setter
@@ -25,12 +27,12 @@ public class Category {
     private UUID id;
 
     @NotBlank
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String name;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "type", nullable = false)
     private TransactionType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
