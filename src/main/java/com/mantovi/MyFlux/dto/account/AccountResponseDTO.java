@@ -1,5 +1,6 @@
-package com.mantovi.MyFlux.dto;
+package com.mantovi.MyFlux.dto.account;
 
+import com.mantovi.MyFlux.dto.UserResponseDTO;
 import com.mantovi.MyFlux.model.AccountType;
 
 import java.math.BigDecimal;

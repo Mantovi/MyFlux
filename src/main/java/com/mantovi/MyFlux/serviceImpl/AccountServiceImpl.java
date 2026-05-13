@@ -1,7 +1,7 @@
 package com.mantovi.MyFlux.serviceImpl;
 
-import com.mantovi.MyFlux.dto.AccountRequestDTO;
-import com.mantovi.MyFlux.dto.AccountResponseDTO;
+import com.mantovi.MyFlux.dto.account.AccountRequestDTO;
+import com.mantovi.MyFlux.dto.account.AccountResponseDTO;
 import com.mantovi.MyFlux.mapper.AccountMapper;
 import com.mantovi.MyFlux.model.Account;
 import com.mantovi.MyFlux.model.User;

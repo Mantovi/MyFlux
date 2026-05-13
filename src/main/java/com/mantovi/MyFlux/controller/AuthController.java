@@ -1,7 +1,7 @@
 package com.mantovi.MyFlux.controller;
 
-import com.mantovi.MyFlux.dto.RegisterRequestDTO;
-import com.mantovi.MyFlux.dto.LoginRequestDTO;
+import com.mantovi.MyFlux.dto.authentication.RegisterRequestDTO;
+import com.mantovi.MyFlux.dto.authentication.LoginRequestDTO;
 import com.mantovi.MyFlux.dto.ResponseDTO;
 import com.mantovi.MyFlux.service.AuthService;
 import jakarta.validation.Valid;

@@ -1,7 +1,7 @@
 package com.mantovi.MyFlux.controller;
 
-import com.mantovi.MyFlux.dto.TransactionRequestDTO;
-import com.mantovi.MyFlux.dto.TransactionResponseDTO;
+import com.mantovi.MyFlux.dto.transaction.TransactionRequestDTO;
+import com.mantovi.MyFlux.dto.transaction.TransactionResponseDTO;
 import com.mantovi.MyFlux.model.User;
 import com.mantovi.MyFlux.service.TransactionService;
 import jakarta.validation.Valid;

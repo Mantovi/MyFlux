@@ -1,7 +1,7 @@
 package com.mantovi.MyFlux.serviceImpl;
 
-import com.mantovi.MyFlux.dto.TransactionRequestDTO;
-import com.mantovi.MyFlux.dto.TransactionResponseDTO;
+import com.mantovi.MyFlux.dto.transaction.TransactionRequestDTO;
+import com.mantovi.MyFlux.dto.transaction.TransactionResponseDTO;
 import com.mantovi.MyFlux.mapper.TransactionMapper;
 import com.mantovi.MyFlux.model.*;
 import com.mantovi.MyFlux.repository.AccountRepository;

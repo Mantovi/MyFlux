@@ -1,4 +1,4 @@
-package com.mantovi.MyFlux.dto;
+package com.mantovi.MyFlux.dto.account;
 
 import com.mantovi.MyFlux.model.AccountType;
 import jakarta.validation.constraints.NotBlank;

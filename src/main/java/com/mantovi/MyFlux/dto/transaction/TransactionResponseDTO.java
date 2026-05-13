@@ -1,4 +1,4 @@
-package com.mantovi.MyFlux.dto;
+package com.mantovi.MyFlux.dto.transaction;
 
 import com.mantovi.MyFlux.model.PaymentMethodType;
 import com.mantovi.MyFlux.model.TransactionStatus;

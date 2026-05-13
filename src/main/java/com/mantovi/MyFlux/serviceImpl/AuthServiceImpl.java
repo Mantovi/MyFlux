@@ -1,7 +1,7 @@
 package com.mantovi.MyFlux.serviceImpl;
 
-import com.mantovi.MyFlux.dto.LoginRequestDTO;
-import com.mantovi.MyFlux.dto.RegisterRequestDTO;
+import com.mantovi.MyFlux.dto.authentication.LoginRequestDTO;
+import com.mantovi.MyFlux.dto.authentication.RegisterRequestDTO;
 import com.mantovi.MyFlux.dto.ResponseDTO;
 import com.mantovi.MyFlux.infra.security.TokenService;
 import com.mantovi.MyFlux.model.Role;

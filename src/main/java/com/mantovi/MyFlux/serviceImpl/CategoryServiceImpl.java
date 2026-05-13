@@ -1,7 +1,7 @@
 package com.mantovi.MyFlux.serviceImpl;
 
-import com.mantovi.MyFlux.dto.CategoryRequestDTO;
-import com.mantovi.MyFlux.dto.CategoryResponseDTO;
+import com.mantovi.MyFlux.dto.category.CategoryRequestDTO;
+import com.mantovi.MyFlux.dto.category.CategoryResponseDTO;
 import com.mantovi.MyFlux.mapper.CategoryMapper;
 import com.mantovi.MyFlux.model.Category;
 import com.mantovi.MyFlux.model.User;

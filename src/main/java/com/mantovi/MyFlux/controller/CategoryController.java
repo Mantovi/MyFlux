@@ -1,7 +1,7 @@
 package com.mantovi.MyFlux.controller;
 
-import com.mantovi.MyFlux.dto.CategoryRequestDTO;
-import com.mantovi.MyFlux.dto.CategoryResponseDTO;
+import com.mantovi.MyFlux.dto.category.CategoryRequestDTO;
+import com.mantovi.MyFlux.dto.category.CategoryResponseDTO;
 import com.mantovi.MyFlux.model.User;
 import com.mantovi.MyFlux.service.CategoryService;
 import jakarta.validation.Valid;

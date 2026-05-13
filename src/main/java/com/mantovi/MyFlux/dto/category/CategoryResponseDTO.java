@@ -1,4 +1,4 @@
-package com.mantovi.MyFlux.dto;
+package com.mantovi.MyFlux.dto.category;
 
 import com.mantovi.MyFlux.model.TransactionType;
 
