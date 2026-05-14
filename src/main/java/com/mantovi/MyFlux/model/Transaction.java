@@ -1,6 +1,7 @@
 package com.mantovi.MyFlux.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -65,6 +66,25 @@ public class Transaction {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "card_id")
+    private CreditCard card;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "invoice_id")
+    private Invoice invoice;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "installment_id")
+    private Installment installment;
+
+    @Column(name = "installment_number")
+    private Integer installmentNumber;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recurrence_id")
+    private Recurrence recurrence;
+
     @Column(updatable = false)
     private Instant createdAt;
     private Instant updatedAt;
@@ -78,5 +98,19 @@ public class Transaction {
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = Instant.now();
+    }
+
+    @AssertTrue(message = "Transação inválida: deve ter conta OU cartão")
+    public boolean isValidSource() {
+        return (account != null && card == null) ||
+                (account == null && card != null);
+    }
+
+    @AssertTrue(message = "Transação de cartão deve ter fatura")
+    public boolean isCardTransactionValid() {
+        if (card != null) {
+            return invoice != null;
+        }
+        return true;
     }
 }
