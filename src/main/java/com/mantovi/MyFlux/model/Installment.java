@@ -32,7 +32,7 @@ public class Installment {
 
     @NotNull
     @Column(nullable = false)
-    private Integer totalInstallment;
+    private Integer totalInstallments;
 
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;

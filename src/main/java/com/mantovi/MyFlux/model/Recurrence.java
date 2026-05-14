@@ -56,7 +56,7 @@ public class Recurrence {
     @PrePersist
     public void prePersist() {
         createdAt = Instant.now();
-        updatedAt = createdAt;
+        updatedAt = Instant.now();
     }
 
     @PreUpdate
