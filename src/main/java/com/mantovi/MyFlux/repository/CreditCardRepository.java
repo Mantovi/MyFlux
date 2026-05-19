@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface CardRepository extends JpaRepository<CreditCard, UUID> {
+public interface CreditCardRepository extends JpaRepository<CreditCard, UUID> {
 }
