@@ -1,15 +1,19 @@
 package com.mantovi.MyFlux.model;
 
+import com.mantovi.MyFlux.config.YearMonthAttributeConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.UUID;
 
 @Entity
-@Table(name = "invoices")
+@Table(name = "invoices",
+        uniqueConstraints = {@UniqueConstraint(
+                columnNames = {"card_id", "reference_period"})})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,6 +31,11 @@ public class Invoice {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "card_id", nullable = false)
     private CreditCard card;
+
+    @NotNull
+    @Column(nullable = false)
+    @Convert(converter = YearMonthAttributeConverter.class)
+    private YearMonth referencePeriod;
 
     @NotNull
     @Column(nullable = false)
