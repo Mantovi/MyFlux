@@ -19,18 +19,20 @@ public record TransactionRequestDTO(
         @NotNull
         LocalDate date,
 
-        @NotNull
-        PaymentMethodType paymentType,
-
-        @NotNull
-        UUID accountId,
-
-        @NotNull
-        UUID categoryId,
-
         @NotBlank
         @Size(min = 1, max = 100)
         String description,
+
+        @NotNull
+        PaymentMethodType paymentType,
+
+        UUID accountId,
+        UUID cardId,
+        Integer totalInstallments,
+        UUID recurrenceId,
+
+        @NotNull
+        UUID categoryId,
 
         @Size(max = 500)
         String observation

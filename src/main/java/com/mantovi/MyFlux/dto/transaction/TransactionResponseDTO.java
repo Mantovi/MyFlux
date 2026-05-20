@@ -15,12 +15,24 @@ public record TransactionResponseDTO(
         BigDecimal amount,
         LocalDate date,
         TransactionStatus status,
+
         UUID accountId,
         String accountName,
+
+        UUID cardId,
+        String cardName,
+
         UUID categoryId,
         String categoryName,
+
         PaymentMethodType paymentMethodType,
         String description,
         String observation,
+
+        Boolean installment,
+        Integer installmentNumber,
+        Integer totalInstallments,
+
+        UUID invoiceId,
         Instant createdAt
 ) {}
