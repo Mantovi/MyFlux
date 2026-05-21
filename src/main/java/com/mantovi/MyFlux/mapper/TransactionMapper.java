@@ -7,6 +7,9 @@ import com.mantovi.MyFlux.model.Transaction;
 import com.mantovi.MyFlux.model.User;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 @Component
 public class TransactionMapper {
     public Transaction toTransaction(TransactionRequestDTO request, User user) {
@@ -14,9 +17,10 @@ public class TransactionMapper {
                 .transactionType(request.type())
                 .amount(request.amount())
                 .date(request.date())
-                .paymentMethodType(request.paymentType())
                 .description(request.description())
+                .paymentMethodType(request.paymentType())
                 .observation(request.observation())
+                .status(TransactionStatus.CONFIRMED)
                 .user(user)
                 .build();
     }
@@ -28,13 +32,45 @@ public class TransactionMapper {
                 transaction.getAmount(),
                 transaction.getDate(),
                 transaction.getStatus(),
-                transaction.getAccount().getId(),
-                transaction.getAccount().getName(),
+
+                //CONTA
+                transaction.getAccount() != null
+                    ? transaction.getAccount().getId()
+                        : null,
+
+                transaction.getAccount() != null
+                    ? transaction.getAccount().getName()
+                        : null,
+
+                //CARTÃO
+                transaction.getCard() != null
+                    ? transaction.getCard().getId()
+                        : null,
+
+                transaction.getCard() != null
+                    ? transaction.getCard().getName()
+                        : null,
+
                 transaction.getCategory().getId(),
                 transaction.getCategory().getName(),
+
                 transaction.getPaymentMethodType(),
                 transaction.getDescription(),
                 transaction.getObservation(),
+
+                transaction.getInstallment() != null,
+                transaction.getInstallmentNumber(),
+
+                transaction.getInstallment() != null
+                    ? transaction.getInstallment()
+                        .getTotalInstallments()
+                            : null,
+
+
+                transaction.getInvoice() != null
+                    ? transaction.getInvoice().getId()
+                        :null,
+
                 transaction.getCreatedAt()
         );
     }
