@@ -6,13 +6,16 @@ import com.mantovi.MyFlux.mapper.TransactionMapper;
 import com.mantovi.MyFlux.model.*;
 import com.mantovi.MyFlux.repository.*;
 import com.mantovi.MyFlux.service.TransactionService;
+import com.mantovi.MyFlux.specification.TransactionSpec;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -26,6 +29,20 @@ public class TransactionServiceImpl implements TransactionService {
     private final CategoryRepository categoryRepository;
     private final InvoiceRepository invoiceRepository;
     private final InstallmentRepository installmentRepository;
+
+    @Override
+    public List<TransactionResponseDTO> findAllFromUser(UUID userId, String description) {
+
+        Specification<Transaction> specification = Specification
+                .where(TransactionSpec.belongsToUser(userId))
+                .and(TransactionSpec.descriptionContains(description));
+
+        List<Transaction> transactions = transactionRepository.findAll(specification);
+
+        return transactions.stream()
+                .map(transactionMapper::toTransactionResponse)
+                .toList();
+    }
 
     public TransactionResponseDTO createTransaction(TransactionRequestDTO request, User user) {
 
