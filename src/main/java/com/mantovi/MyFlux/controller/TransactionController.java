@@ -1,5 +1,6 @@
 package com.mantovi.MyFlux.controller;
 
+import com.mantovi.MyFlux.dto.filter.TransactionFilterDTO;
 import com.mantovi.MyFlux.dto.transaction.TransactionRequestDTO;
 import com.mantovi.MyFlux.dto.transaction.TransactionResponseDTO;
 import com.mantovi.MyFlux.model.User;
@@ -26,9 +27,8 @@ public class TransactionController {
 
     @GetMapping
     public ResponseEntity<List<TransactionResponseDTO>> getTransactions(
-            @AuthenticationPrincipal User user,
-            @RequestParam(required = false) String description) {
+            @AuthenticationPrincipal User user, TransactionFilterDTO filters) {
 
-        return ResponseEntity.ok(transactionService.findAllFromUser(user.getId(), description));
+        return ResponseEntity.ok(transactionService.findTransactionsFromUser(user.getId(), filters));
     }
 }

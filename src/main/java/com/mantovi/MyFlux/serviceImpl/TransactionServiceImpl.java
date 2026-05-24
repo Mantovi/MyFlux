@@ -1,5 +1,6 @@
 package com.mantovi.MyFlux.serviceImpl;
 
+import com.mantovi.MyFlux.dto.filter.TransactionFilterDTO;
 import com.mantovi.MyFlux.dto.transaction.TransactionRequestDTO;
 import com.mantovi.MyFlux.dto.transaction.TransactionResponseDTO;
 import com.mantovi.MyFlux.mapper.TransactionMapper;
@@ -31,11 +32,12 @@ public class TransactionServiceImpl implements TransactionService {
     private final InstallmentRepository installmentRepository;
 
     @Override
-    public List<TransactionResponseDTO> findAllFromUser(UUID userId, String description) {
+    public List<TransactionResponseDTO> findTransactionsFromUser(UUID userId, TransactionFilterDTO filters) {
 
         Specification<Transaction> specification = Specification
                 .where(TransactionSpec.belongsToUser(userId))
-                .and(TransactionSpec.descriptionContains(description));
+                .and(TransactionSpec.descriptionContains(filters.description()))
+                .and(TransactionSpec.typeEquals(filters.transactionType()));
 
         List<Transaction> transactions = transactionRepository.findAll(specification);
 
