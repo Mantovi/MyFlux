@@ -15,10 +15,12 @@ public class TransactionSpec {
 
     public static Specification<Transaction> descriptionContains(String description) {
         return (root, query, builder) -> {
-            if (description == null || description.isEmpty()) {
-                return null;
+            if (description == null || description.isBlank()) {
+                return builder.conjunction();
             }
-            return builder.like(root.get("description").as(String.class), "%" + description + "%");
+            return builder.like(builder.lower(
+                    root.get("description")), "%" + description.toLowerCase() + "%"
+            );
         };
     }
 }
