@@ -1,6 +1,8 @@
 package com.mantovi.MyFlux.specification;
 
+import com.mantovi.MyFlux.model.PaymentMethodType;
 import com.mantovi.MyFlux.model.Transaction;
+import com.mantovi.MyFlux.model.TransactionStatus;
 import com.mantovi.MyFlux.model.TransactionType;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -32,4 +34,24 @@ public class TransactionSpec {
             return builder.equal(root.get("transactionType"), transactionType);
         };
     }
+
+    public static Specification<Transaction> paymentMethodUsed(PaymentMethodType paymentMethodType) {
+        return (root, query, builder) -> {
+            if (paymentMethodType == null) {
+                return builder.conjunction();
+            }
+            return builder.equal(root.get("paymentMethodType"), paymentMethodType);
+        };
+    }
+
+    public static Specification<Transaction> statusTransaction(TransactionStatus status) {
+        return (root, query, builder) -> {
+            if (status == null) {
+                return builder.conjunction();
+            }
+            return builder.equal(root.get("status"), status);
+        };
+    }
+
+
 }

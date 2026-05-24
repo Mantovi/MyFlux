@@ -37,7 +37,9 @@ public class TransactionServiceImpl implements TransactionService {
         Specification<Transaction> specification = Specification
                 .where(TransactionSpec.belongsToUser(userId))
                 .and(TransactionSpec.descriptionContains(filters.description()))
-                .and(TransactionSpec.typeEquals(filters.transactionType()));
+                .and(TransactionSpec.typeEquals(filters.transactionType()))
+                .and(TransactionSpec.paymentMethodUsed(filters.paymentMethodType()))
+                .and(TransactionSpec.statusTransaction(filters.status()));
 
         List<Transaction> transactions = transactionRepository.findAll(specification);
 
