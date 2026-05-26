@@ -1,14 +1,16 @@
 package com.mantovi.MyFlux.serviceImpl;
 
-import com.mantovi.MyFlux.dto.filter.TransactionFilterDTO;
+import com.mantovi.MyFlux.filter.TransactionFilterDTO;
 import com.mantovi.MyFlux.dto.transaction.TransactionRequestDTO;
 import com.mantovi.MyFlux.dto.transaction.TransactionResponseDTO;
+import com.mantovi.MyFlux.filter.TransactionSortField;
 import com.mantovi.MyFlux.mapper.TransactionMapper;
 import com.mantovi.MyFlux.model.*;
 import com.mantovi.MyFlux.repository.*;
 import com.mantovi.MyFlux.service.TransactionService;
 import com.mantovi.MyFlux.specification.TransactionSpec;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +48,11 @@ public class TransactionServiceImpl implements TransactionService {
                 .and(TransactionSpec.belongsToAccount(filters.accountId()))
                 .and(TransactionSpec.belongsToCard(filters.cardId()));
 
-        List<Transaction> transactions = transactionRepository.findAll(specification);
+        Sort sort = Sort.by(filters.direction() != null ? filters.direction() : Sort.Direction.ASC,
+                filters.sortBy() != null ? filters.sortBy().getField() : TransactionSortField.DATE.getField()
+        );
+
+        List<Transaction> transactions = transactionRepository.findAll(specification, sort);
 
         return transactions.stream()
                 .map(transactionMapper::toTransactionResponse)

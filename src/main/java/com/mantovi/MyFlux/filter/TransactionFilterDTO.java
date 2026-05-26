@@ -1,7 +1,7 @@
-package com.mantovi.MyFlux.dto.filter;
+package com.mantovi.MyFlux.filter;
 
 import com.mantovi.MyFlux.model.*;
-import org.hibernate.query.SortDirection;
+import org.springframework.data.domain.Sort;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -23,6 +23,6 @@ public record TransactionFilterDTO (
   BigDecimal maxAmount,
   String description,
 
-  String sortBy,
-  SortDirection direction
+  TransactionSortField sortBy,
+  Sort.Direction direction
 ) {}
