@@ -39,7 +39,12 @@ public class TransactionServiceImpl implements TransactionService {
                 .and(TransactionSpec.descriptionContains(filters.description()))
                 .and(TransactionSpec.typeEquals(filters.transactionType()))
                 .and(TransactionSpec.paymentMethodUsed(filters.paymentMethodType()))
-                .and(TransactionSpec.statusTransaction(filters.status()));
+                .and(TransactionSpec.statusTransaction(filters.status()))
+                .and(TransactionSpec.transactionDate(filters.date()))
+                .and(TransactionSpec.valueRange(filters.minAmount(), filters.maxAmount()))
+                .and(TransactionSpec.belongsToCategory(filters.categoryId()))
+                .and(TransactionSpec.belongsToAccount(filters.accountId()))
+                .and(TransactionSpec.belongsToCard(filters.cardId()));
 
         List<Transaction> transactions = transactionRepository.findAll(specification);
 

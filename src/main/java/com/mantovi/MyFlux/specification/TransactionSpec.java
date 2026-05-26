@@ -1,11 +1,10 @@
 package com.mantovi.MyFlux.specification;
 
-import com.mantovi.MyFlux.model.PaymentMethodType;
-import com.mantovi.MyFlux.model.Transaction;
-import com.mantovi.MyFlux.model.TransactionStatus;
-import com.mantovi.MyFlux.model.TransactionType;
+import com.mantovi.MyFlux.model.*;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class TransactionSpec {
@@ -53,5 +52,54 @@ public class TransactionSpec {
         };
     }
 
+    public static Specification<Transaction> transactionDate(LocalDate date) {
+        return (root, query, builder) -> {
+            if (date == null) {
+                return builder.conjunction();
+            }
+            return builder.equal(root.get("date"), date);
+        };
+    }
 
+    public static Specification<Transaction> valueRange(BigDecimal minAmount, BigDecimal maxAmount) {
+        return (root, query, builder) -> {
+            if (minAmount == null && maxAmount == null) {
+                return builder.conjunction();
+            }
+            if(minAmount != null && maxAmount != null) {
+                return builder.between(root.get("amount"), minAmount, maxAmount);
+            }
+            if(minAmount != null){
+                return builder.greaterThanOrEqualTo(root.get("amount"), minAmount);
+            }
+            return builder.lessThanOrEqualTo(root.get("amount"), maxAmount);
+        };
+    }
+
+    public static Specification<Transaction> belongsToCategory(UUID categoryId) {
+        return (root, query, builder) -> {
+            if (categoryId == null) {
+                return builder.conjunction();
+            }
+            return builder.equal(root.get("category").get("id"), categoryId);
+        };
+    }
+
+    public static Specification<Transaction> belongsToAccount(UUID accountId) {
+        return (root, query, builder) -> {
+            if (accountId == null) {
+                return builder.conjunction();
+            }
+            return builder.equal(root.get("account").get("id"), accountId);
+        };
+    }
+
+    public static Specification<Transaction> belongsToCard(UUID cardId) {
+        return (root, query, builder) -> {
+            if (cardId == null) {
+                return builder.conjunction();
+            }
+            return builder.equal(root.get("card").get("id"), cardId);
+        };
+    }
 }

@@ -17,7 +17,7 @@ public record TransactionFilterDTO (
 
   UUID categoryId,
   UUID accountId,
-  UUID creditCardId,
+  UUID cardId,
 
   BigDecimal minAmount,
   BigDecimal maxAmount,
