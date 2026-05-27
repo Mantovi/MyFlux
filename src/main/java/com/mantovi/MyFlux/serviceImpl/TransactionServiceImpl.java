@@ -43,6 +43,7 @@ public class TransactionServiceImpl implements TransactionService {
                 .and(TransactionSpec.paymentMethodUsed(filters.paymentMethodType()))
                 .and(TransactionSpec.statusTransaction(filters.status()))
                 .and(TransactionSpec.transactionDate(filters.date()))
+                .and(TransactionSpec.transactionBetweenDates(filters.startDate(), filters.endDate()))
                 .and(TransactionSpec.valueRange(filters.minAmount(), filters.maxAmount()))
                 .and(TransactionSpec.belongsToCategory(filters.categoryId()))
                 .and(TransactionSpec.belongsToAccount(filters.accountId()))

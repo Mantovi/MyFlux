@@ -10,6 +10,8 @@ import java.util.UUID;
 public record TransactionFilterDTO (
 
   LocalDate date,
+  LocalDate startDate,
+  LocalDate endDate,
 
   TransactionType transactionType,
   PaymentMethodType paymentMethodType,

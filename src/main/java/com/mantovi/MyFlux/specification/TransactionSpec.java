@@ -61,6 +61,21 @@ public class TransactionSpec {
         };
     }
 
+    public static Specification<Transaction> transactionBetweenDates(LocalDate startDate, LocalDate endDate) {
+        return (root, query, builder) -> {
+            if (startDate == null && endDate == null) {
+                return builder.conjunction();
+            }
+            if (startDate != null && endDate != null) {
+                return builder.between(root.get("date"), startDate, endDate);
+            }
+            if (startDate != null) {
+                return builder.greaterThanOrEqualTo(root.get("date"), startDate);
+            }
+            return builder.lessThanOrEqualTo(root.get("date"), endDate);
+        };
+    }
+
     public static Specification<Transaction> valueRange(BigDecimal minAmount, BigDecimal maxAmount) {
         return (root, query, builder) -> {
             if (minAmount == null && maxAmount == null) {
