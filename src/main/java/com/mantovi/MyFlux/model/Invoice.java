@@ -8,6 +8,8 @@ import lombok.*;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -53,6 +55,9 @@ public class Invoice {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private InvoiceStatus status;
+
+    @OneToMany(mappedBy = "invoice", fetch = FetchType.LAZY)
+    private List<Transaction> transactions = new ArrayList<>();
 
     private Instant createdAt;
 

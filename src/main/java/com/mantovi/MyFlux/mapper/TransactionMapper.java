@@ -12,6 +12,20 @@ import java.time.LocalDate;
 
 @Component
 public class TransactionMapper {
+
+    public TransactionInvoiceResponseDTO toInvoiceResponse(Transaction transaction) {
+        return new TransactionInvoiceResponseDTO(
+                transaction.getId(),
+                transaction.getDescription(),
+                transaction.getObservation(),
+                transaction.getAmount(),
+                transaction.getDate(),
+                transaction.getStatus(),
+                transaction.getTransactionType(),
+                transaction.getInstallmentNumber()
+        );
+    }
+
     public Transaction toTransaction(TransactionRequestDTO request, User user) {
         return Transaction.builder()
                 .transactionType(request.type())
