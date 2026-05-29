@@ -1,19 +1,24 @@
 package com.mantovi.MyFlux.mapper;
 
+import com.mantovi.MyFlux.dto.transaction.TransactionInvoiceResponseDTO;
 import com.mantovi.MyFlux.dto.transaction.TransactionRequestDTO;
 import com.mantovi.MyFlux.dto.transaction.TransactionResponseDTO;
-import com.mantovi.MyFlux.dto.transaction.UpdateTransactionDTO;
 import com.mantovi.MyFlux.model.Transaction;
+import com.mantovi.MyFlux.model.TransactionStatus;
 import com.mantovi.MyFlux.model.User;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Component
 public class TransactionMapper {
 
     public TransactionInvoiceResponseDTO toInvoiceResponse(Transaction transaction) {
+
+        Integer totalInstallments = null;
+        if (transaction.getInstallment() != null) {
+            totalInstallments = transaction.getInstallment().getTotalInstallments();
+        }
+
         return new TransactionInvoiceResponseDTO(
                 transaction.getId(),
                 transaction.getDescription(),
@@ -22,7 +27,8 @@ public class TransactionMapper {
                 transaction.getDate(),
                 transaction.getStatus(),
                 transaction.getTransactionType(),
-                transaction.getInstallmentNumber()
+                transaction.getInstallmentNumber(),
+                totalInstallments
         );
     }
 

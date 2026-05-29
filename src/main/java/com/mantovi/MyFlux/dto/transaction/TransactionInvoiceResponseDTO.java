@@ -15,5 +15,6 @@ public record TransactionInvoiceResponseDTO(
         LocalDate date,
         TransactionStatus status,
         TransactionType transactionType,
-        Integer installmentNumber
+        Integer installmentNumber,
+        Integer totalInstallments
 ) {}
