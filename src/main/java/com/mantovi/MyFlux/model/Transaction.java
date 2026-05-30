@@ -85,6 +85,10 @@ public class Transaction {
     @JoinColumn(name = "recurrence_id")
     private Recurrence recurrence;
 
+    @ManyToOne
+    @JoinColumn(name = "transfer_id")
+    private Transfer transfer;
+
     @Column(updatable = false)
     private Instant createdAt;
     private Instant updatedAt;

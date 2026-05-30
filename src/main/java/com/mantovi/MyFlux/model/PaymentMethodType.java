@@ -4,5 +4,6 @@ public enum PaymentMethodType {
     PIX,
     CASH,
     CREDIT_CARD,
-    DEBIT_CARD
+    DEBIT_CARD,
+    TRANSFER
 }
