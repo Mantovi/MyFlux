@@ -11,4 +11,6 @@ public interface AccountService {
     AccountResponseDTO create(AccountRequestDTO request, User user);
 
     AccountResponseDTO update(UUID accountId, AccountUpdateRequestDTO request, User user);
+
+    void deleteById(UUID accountId, User user);
 }

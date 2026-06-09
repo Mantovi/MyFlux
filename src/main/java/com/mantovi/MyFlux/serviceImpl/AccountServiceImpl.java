@@ -7,6 +7,7 @@ import com.mantovi.MyFlux.mapper.AccountMapper;
 import com.mantovi.MyFlux.model.Account;
 import com.mantovi.MyFlux.model.User;
 import com.mantovi.MyFlux.repository.AccountRepository;
+import com.mantovi.MyFlux.repository.TransactionRepository;
 import com.mantovi.MyFlux.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,8 @@ import java.util.UUID;
 public class AccountServiceImpl implements AccountService {
 
     public final AccountRepository accountRepository;
-    public final AccountMapper  accountMapper;
+    public final AccountMapper accountMapper;
+    public final TransactionRepository transactionRepository;
 
     @Override
     public AccountResponseDTO create(AccountRequestDTO request, User user) {
@@ -38,5 +40,24 @@ public class AccountServiceImpl implements AccountService {
         Account savedAccount = accountRepository.save(account);
 
         return accountMapper.toAccountResponse(savedAccount);
+    }
+
+    @Override
+    public void deleteById(UUID accountId, User user) {
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
+
+        if (!account.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("Acesso negado");
+        }
+
+        if (transactionRepository.existsByAccountId(accountId)) {
+            throw new RuntimeException("Não é possível excluir contas que possuem transações cadastradas");
+        }
+
+        if (account.getActive().equals(true)) {
+            throw new RuntimeException("Essa conta está ativa, desative essa conta antes de excluir");
+        }
+        accountRepository.deleteById(accountId);
     }
 }

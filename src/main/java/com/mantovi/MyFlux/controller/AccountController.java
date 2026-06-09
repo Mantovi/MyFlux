@@ -28,4 +28,10 @@ public class AccountController {
     public ResponseEntity<AccountResponseDTO> updateAccount(@PathVariable UUID accountId, @RequestBody @Valid AccountUpdateRequestDTO accountRequest, @AuthenticationPrincipal User user) {
         return ResponseEntity.ok(accountService.update(accountId, accountRequest, user));
     }
+
+    @DeleteMapping("/delete/{accountId}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable UUID accountId, @AuthenticationPrincipal User user) {
+        accountService.deleteById(accountId, user);
+        return ResponseEntity.noContent().build();
+    }
 }
