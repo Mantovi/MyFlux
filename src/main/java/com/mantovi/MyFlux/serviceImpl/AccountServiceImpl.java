@@ -12,6 +12,7 @@ import com.mantovi.MyFlux.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -59,5 +60,28 @@ public class AccountServiceImpl implements AccountService {
             throw new RuntimeException("Essa conta está ativa, desative essa conta antes de excluir");
         }
         accountRepository.deleteById(accountId);
+    }
+
+    @Override
+    public AccountResponseDTO getAccountById(UUID accountId, User user) {
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
+        
+        if (!account.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("Acesso negado");
+        }
+
+        return accountMapper.toAccountResponse(account);
+    }
+
+    @Override
+    public List<AccountResponseDTO> getAllAccounts(User user) {
+        if (accountRepository.count() == 0) {
+            throw new RuntimeException("Nenhum conta encontrada");
+        }
+        return accountRepository.findByUserId(user.getId())
+                .stream()
+                .map(accountMapper::toAccountResponse)
+                .toList();
     }
 }

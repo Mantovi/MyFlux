@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -33,5 +34,15 @@ public class AccountController {
     public ResponseEntity<Void> deleteAccount(@PathVariable UUID accountId, @AuthenticationPrincipal User user) {
         accountService.deleteById(accountId, user);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{accountId}")
+    public ResponseEntity<AccountResponseDTO> getAccount(@PathVariable UUID accountId, @AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(accountService.getAccountById(accountId, user));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<AccountResponseDTO>> getAllAccounts(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(accountService.getAllAccounts(user));
     }
 }
