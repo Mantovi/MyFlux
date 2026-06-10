@@ -7,6 +7,7 @@ import com.mantovi.MyFlux.mapper.CategoryMapper;
 import com.mantovi.MyFlux.model.Category;
 import com.mantovi.MyFlux.model.User;
 import com.mantovi.MyFlux.repository.CategoryRepository;
+import com.mantovi.MyFlux.repository.TransactionRepository;
 import com.mantovi.MyFlux.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.UUID;
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+    private final TransactionRepository transactionRepository;
 
 
     @Override
@@ -54,6 +56,25 @@ public class CategoryServiceImpl implements CategoryService {
         categoryMapper.updateCategory(category, request, user);
         Category savedCategory = categoryRepository.save(category);
         return categoryMapper.toResponseCategory(savedCategory);
+    }
+
+    @Override
+    public void deleteById(UUID categoryId, User user) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
+        if (!category.isGlobal() &&
+                (category.getUser() == null ||
+                        !category.getUser().getId().equals(user.getId())
+                )) {
+            throw new RuntimeException("Acesso Negado");
+        }
+        if (category.isGlobal()) {
+            throw new RuntimeException("Categorias globais não podem ser removidas");
+        }
+        if (transactionRepository.existsByCategoryId(categoryId)) {
+            throw new RuntimeException("Não é possível excluir categorias que estão vinculadas a alguma transação");
+        }
+        categoryRepository.deleteById(categoryId);
     }
 
     @Override

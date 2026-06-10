@@ -37,6 +37,12 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.update(categoryId, request, user));
     }
 
+    @DeleteMapping("/delete/{categoryId}")
+    public ResponseEntity<Void> delete(@PathVariable UUID categoryId, @AuthenticationPrincipal User user) {
+        categoryService.deleteById(categoryId, user);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping
     public ResponseEntity<List<CategoryResponseDTO>> getCategories(
             @AuthenticationPrincipal User user) {
