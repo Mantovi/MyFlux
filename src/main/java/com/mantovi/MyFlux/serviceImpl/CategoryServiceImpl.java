@@ -2,6 +2,7 @@ package com.mantovi.MyFlux.serviceImpl;
 
 import com.mantovi.MyFlux.dto.category.CategoryRequestDTO;
 import com.mantovi.MyFlux.dto.category.CategoryResponseDTO;
+import com.mantovi.MyFlux.dto.category.CategoryUpdateRequestDTO;
 import com.mantovi.MyFlux.mapper.CategoryMapper;
 import com.mantovi.MyFlux.model.Category;
 import com.mantovi.MyFlux.model.User;
@@ -41,6 +42,16 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         Category category = categoryMapper.toCategoryGlobal(request);
+        Category savedCategory = categoryRepository.save(category);
+        return categoryMapper.toResponseCategory(savedCategory);
+    }
+
+    @Override
+    public CategoryResponseDTO update(UUID categoryId, CategoryUpdateRequestDTO request, User user) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+
+        categoryMapper.updateCategory(category, request, user);
         Category savedCategory = categoryRepository.save(category);
         return categoryMapper.toResponseCategory(savedCategory);
     }
