@@ -250,10 +250,6 @@ public class TransactionServiceImpl implements TransactionService {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Categoria não encontrada"));
 
-        if (!category.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("Usuário sem acesso a essa categoria");
-        }
-
         if (category.getType() != type) {
             throw new RuntimeException("O tipo da categoria e da transação não coincidem");
         }
