@@ -241,6 +241,11 @@ public class TransactionServiceImpl implements TransactionService {
         if (!card.getUser().getId().equals(user.getId())) {
             throw new RuntimeException("Usuário sem acesso a esse cartão");
         }
+
+        if (!card.getActive().equals(true)) {
+            throw new RuntimeException("Esse cartão está desativado");
+        }
+
         return card;
     }
 
