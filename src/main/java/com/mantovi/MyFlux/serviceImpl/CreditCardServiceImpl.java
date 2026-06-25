@@ -21,14 +21,12 @@ public class CreditCardServiceImpl implements CreditCardService {
     private final CreditCardRepository creditCardRepository;
     private final CreditCardMapper creditCardMapper;
 
-
     @Override
     public CreditCardResponseDTO createCreditCard(CreditCardRequestDTO request, User user) {
 
         CreditCard card = creditCardMapper.toCreditCard(request, user);
         CreditCard savedCard = creditCardRepository.save(card);
         return creditCardMapper.toCreditCardResponse(savedCard);
-
     }
 
     @Override
@@ -37,6 +35,13 @@ public class CreditCardServiceImpl implements CreditCardService {
         return creditCard.stream()
                 .map(creditCardMapper::toCreditCardResponse)
                 .toList();
+    }
+
+    @Override
+    public CreditCardResponseDTO getCardById(UUID cardId) {
+        CreditCard card = creditCardRepository.findById(cardId)
+                .orElseThrow(() -> new RuntimeException("Cartão de Crédito não encontrado"));
+        return creditCardMapper.toCreditCardResponse(card);
     }
 
     @Override
@@ -57,8 +62,6 @@ public class CreditCardServiceImpl implements CreditCardService {
         if (!card.getUser().getId().equals(user.getId())) {
             throw new RuntimeException("Acesso Negado");
         }
-
         creditCardRepository.deleteById(cardId);
-
     }
 }

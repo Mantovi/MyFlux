@@ -15,6 +15,8 @@ public interface CreditCardService {
 
     List<CreditCardResponseDTO> listCardsByUser(UUID userId);
 
+    CreditCardResponseDTO getCardById(UUID cardId);
+
     CreditCardResponseDTO update(UUID cardId, CreditCardUpdateRequestDTO request, User user);
 
     void deleteById(UUID cardId, User user);

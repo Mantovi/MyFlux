@@ -32,6 +32,12 @@ public class CreditCardController {
         return ResponseEntity.ok(creditCardService.listCardsByUser(user.getId()));
     }
 
+    @GetMapping("/{cardId}")
+    public ResponseEntity<CreditCardResponseDTO> getCard(@PathVariable UUID cardId,
+                                                         @AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(creditCardService.getCardById(cardId));
+    }
+
     @PatchMapping("/update/{cardId}")
     public ResponseEntity<CreditCardResponseDTO> updateCard(@PathVariable UUID cardId,
                                                             @RequestBody @Valid CreditCardUpdateRequestDTO request,
