@@ -1,7 +1,6 @@
 package com.mantovi.MyFlux.repository;
 
 import com.mantovi.MyFlux.model.Invoice;
-import com.mantovi.MyFlux.model.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,8 +13,9 @@ import java.util.UUID;
 @Repository
 public interface InvoiceRepository extends JpaRepository<Invoice, UUID> {
 
-    Optional<Invoice> findByCardIdAndReferencePeriod(UUID cardId, YearMonth referencePeriod);
+    List<Invoice> findInvoicesByCardId(UUID cardId);
 
+    Optional<Invoice> findInvoiceByCardIdAndReferencePeriod(UUID cardId, YearMonth referencePeriod);
 
     @Query("""
             SELECT DISTINCT i

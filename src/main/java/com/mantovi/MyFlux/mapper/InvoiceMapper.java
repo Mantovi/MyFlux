@@ -1,8 +1,8 @@
 package com.mantovi.MyFlux.mapper;
 
 import com.mantovi.MyFlux.dto.invoice.InvoiceResponseDTO;
+import com.mantovi.MyFlux.dto.invoice.InvoiceSummaryResponseDTO;
 import com.mantovi.MyFlux.dto.transaction.TransactionInvoiceResponseDTO;
-import com.mantovi.MyFlux.dto.transaction.TransactionResponseDTO;
 import com.mantovi.MyFlux.model.Invoice;
 import com.mantovi.MyFlux.model.Transaction;
 import org.springframework.stereotype.Component;
@@ -43,6 +43,25 @@ public class InvoiceMapper {
                 invoice.getStatus(),
                 totalAmount,
                 transactions
+        );
+    }
+
+    public InvoiceSummaryResponseDTO toSummaryResponse(Invoice invoice) {
+
+        BigDecimal totalAmount = invoice.getTransactions()
+                .stream()
+                .map(Transaction::getAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return new InvoiceSummaryResponseDTO(
+                invoice.getId(),
+                invoice.getCard().getId(),
+                invoice.getCard().getName(),
+                invoice.getReferencePeriod(),
+                invoice.getClosingDate(),
+                invoice.getDueDate(),
+                invoice.getStatus(),
+                totalAmount
         );
     }
 }

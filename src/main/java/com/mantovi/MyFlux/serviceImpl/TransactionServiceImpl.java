@@ -279,7 +279,7 @@ public class TransactionServiceImpl implements TransactionService {
                 transactionDate, card.getClosingDay()
         );
 
-        return invoiceRepository.findByCardIdAndReferencePeriod(
+        return invoiceRepository.findInvoiceByCardIdAndReferencePeriod(
                 card.getId(),
                 referencePeriod
         )
