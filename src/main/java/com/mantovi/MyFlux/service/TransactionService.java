@@ -12,4 +12,5 @@ public interface TransactionService {
 
     TransactionResponseDTO createTransaction(TransactionRequestDTO request, User user);
     List<TransactionResponseDTO> findTransactionsFromUser(UUID userId, TransactionFilterDTO filters);
+
 }

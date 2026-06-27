@@ -3,6 +3,7 @@ package com.mantovi.MyFlux.service;
 import com.mantovi.MyFlux.dto.account.AccountRequestDTO;
 import com.mantovi.MyFlux.dto.account.AccountResponseDTO;
 import com.mantovi.MyFlux.dto.account.AccountUpdateRequestDTO;
+import com.mantovi.MyFlux.model.Transaction;
 import com.mantovi.MyFlux.model.User;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface AccountService {
     AccountResponseDTO getAccountById(UUID accountId, User user);
 
     List<AccountResponseDTO> getAllAccounts(User user);
+
+    void applyBalance(Transaction transaction);
 }

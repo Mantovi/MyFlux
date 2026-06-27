@@ -4,14 +4,14 @@ import com.mantovi.MyFlux.dto.account.AccountRequestDTO;
 import com.mantovi.MyFlux.dto.account.AccountResponseDTO;
 import com.mantovi.MyFlux.dto.account.AccountUpdateRequestDTO;
 import com.mantovi.MyFlux.mapper.AccountMapper;
-import com.mantovi.MyFlux.model.Account;
-import com.mantovi.MyFlux.model.User;
+import com.mantovi.MyFlux.model.*;
 import com.mantovi.MyFlux.repository.AccountRepository;
 import com.mantovi.MyFlux.repository.TransactionRepository;
 import com.mantovi.MyFlux.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -83,5 +83,35 @@ public class AccountServiceImpl implements AccountService {
                 .stream()
                 .map(accountMapper::toAccountResponse)
                 .toList();
+    }
+
+    @Override
+    public void applyBalance(Transaction transaction) {
+        applyBalanceEffect(transaction);
+    }
+
+    private void applyBalanceEffect(Transaction transaction) {
+        if (transaction.getStatus() != TransactionStatus.CONFIRMED) {
+            return;
+        }
+
+        if (transaction.getAccount() == null) {
+            return;
+        }
+
+        Account account = transaction.getAccount();
+
+        BigDecimal currentBalance = account.getCurrentBalance();
+
+        if (transaction.getTransactionType() == TransactionType.INCOME){
+            account.setCurrentBalance(currentBalance.add(transaction.getAmount()
+                    )
+            );
+        } else {
+            account.setCurrentBalance(currentBalance.subtract(transaction.getAmount()
+                    )
+            );
+        }
+        accountRepository.save(account);
     }
 }
